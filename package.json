@@ -1,0 +1,14 @@
+{
+  "name": "import-record-buffer-to-leaderboard",
+  "version": "1.0.0",
+  "description": "importare record dalla tabella \"buffer\" alla tabella \"leaderboard\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
+}
