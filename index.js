@@ -26,19 +26,20 @@ exports.handler = (event, context, callback) => {
             });
         } else {
             let query = `
-            start transaction;
-
-            replace into leaderboard(username, score, duration)
-            select 
-                b.username as username, 
-                coalesce(if(b.score < l.score, l.score, b.score),0)  as score ,
-                coalesce(if(b.duration < l.duration, l.duration, b.duration), 0)  as duration 
-                
-            from buffer b left join leaderboard l on b.username = l.username;
+                start transaction;
     
-            delete from buffer;
-    
-            commit;`.replace(/\s+/g, ' ')
+                replace into leaderboard(username, score, defeated)
+                select 
+                    b.username as username, 
+                    coalesce(if(b.score < l.score, l.score, b.score),0)  as score ,
+                    coalesce(b.defeated,0)+coalesce(l.defeated,0) as defeated 
+                    
+                from buffer b left join leaderboard l on b.username = l.username;
+        
+                delete from buffer;
+        
+                commit;`.replace(/\s+/g, ' ')
+            
             connection.query(query, (error, results, fields) => {            
                 if(error){
                     console.log("FAILED TO MIGRATE RECORDS FROM BUFFER TO LEADERBOARD: "+ error);

@@ -1,1 +1,0 @@
-Lambda necessaria per importare le classifiche da tabella `buffer` a tabella `leaderboard` per velocizzare inserimenti (indici)
